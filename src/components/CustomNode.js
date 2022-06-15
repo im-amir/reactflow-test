@@ -4,9 +4,8 @@ import {Box, TextField} from "@mui/material";
 import {FolderOpen} from '@material-ui/icons'
 
 
-function TextUpdaterNode({ data }) {
-  console.log(data)
-  const {id, label, edgePosition, type} = data;
+function CustomNode({ data }) {
+  const {id, label, edgePosition, type, notConnectable} = data;
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState(label)
   const toggleEditing = () => setIsEditing(!isEditing)
@@ -14,7 +13,12 @@ function TextUpdaterNode({ data }) {
   return (
     <Box display='flex' alignItems='center' p={2}>
       <Box display='flex' alignItems='center'>
-        <Handle type={type} position={edgePosition} id={id} />
+        <Handle
+          type={type}
+          position={edgePosition}
+          id={id}
+          isValidConnection={() => !notConnectable}
+        />
         <FolderOpen/>
         <div>
           {isEditing ?
@@ -36,4 +40,4 @@ function TextUpdaterNode({ data }) {
   );
 }
 
-export default TextUpdaterNode;
+export default CustomNode;
