@@ -9,6 +9,7 @@ function CustomNode({ data }) {
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState(label)
   const toggleEditing = () => setIsEditing(!isEditing)
+  const isSource = type === 'source'
 
   return (
     <Box display='flex' alignItems='center' p={2}>
@@ -19,7 +20,9 @@ function CustomNode({ data }) {
           id={id}
           isValidConnection={() => !notConnectable}
         />
-        <FolderOpen/>
+        {isSource &&
+          <FolderOpen/>
+        }
         <div>
           {isEditing ?
             <TextField
@@ -32,9 +35,12 @@ function CustomNode({ data }) {
               }}}
               className='text-input'
             /> :
-            <Box ml={1} onClick={toggleEditing}>{text}</Box>
+            <Box ml={isSource ? 1: 0} mr={isSource ? 0 : 1} onClick={toggleEditing}>{text}</Box>
           }
         </div>
+        {!isSource &&
+          <FolderOpen/>
+        }
       </Box>
     </Box>
   );
